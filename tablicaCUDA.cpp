@@ -16,7 +16,7 @@ __global__ void square_array(float *a, int N)
 	if (idx<N) a[idx] = a[idx] * a[idx];
 }
 
-// Funkcja wywo³ywana na CPU
+// Funkcja wywo³ywana na CPU zmiana zmiana zmiana
 int main(void)
 {
 	float *a_h, *a_d;  // WskaŸniki do wykorzystywanych tablic
