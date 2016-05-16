@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <cuda.h>
 
-// Funkcja wykonywana równolegle na wielu danych
-// przez jednostki strumieniowe GPU
+// Funkcja wykonywana równolegle na wielu danych przez jednostki strumieniowe GPU
 __global__ void square_array(float *a, int N)
 {
 	// Obliczamy numer w¹tku na podstawie numeru bloku,
@@ -44,6 +43,6 @@ int main(void)
 
 
 	for (int i = 0; i<N; i++) printf("%d %f\n", i, a_h[i]); //~dominik dodalem funkcje wypisujaca wyniki
-	// Zwalnianie
+	// Zwalnianie pamiêci
 	free(a_h); cudaFree(a_d);
 }
