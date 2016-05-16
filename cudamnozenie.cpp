@@ -1,4 +1,4 @@
-#include "stdafx.h" // do czego to ? 
+#include "stdafx.h" // (czyli przekompilowane naglowki). Jest to biblioteka przyspieszajaca kompilacje programu, charakterystyczne dla Visual Studio.
 #include <stdio.h>
 #include <cuda.h>
 #define ROW1 2
