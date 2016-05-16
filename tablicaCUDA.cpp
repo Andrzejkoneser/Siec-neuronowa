@@ -42,8 +42,8 @@ int main(void)
 	// Pobranie danych wynikowych z GPU do CPU
 	cudaMemcpy(a_h, a_d, sizeof(float)*N, cudaMemcpyDeviceToHost);
 
-	// Wypisanie wyników
-	for (int i = 0; i<N; i++) printf("%d %f\n", i, a_h[i]);
+
+	for (int i = 0; i<N; i++) printf("%d %f\n", i, a_h[i]); //~dominik dodalem funkcje wypisujaca wyniki
 	// Zwalnianie
 	free(a_h); cudaFree(a_d);
 }
