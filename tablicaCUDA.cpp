@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <cuda.h>
 
+//lel XD
 // Funkcja wykonywana równolegle na wielu danych
 // przez jednostki strumieniowe GPU
 __global__ void square_array(float *a, int N)
