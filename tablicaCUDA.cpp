@@ -33,7 +33,7 @@ int main(void)
 
 	// Ustalenie rozmiaru bloku
 	int block_size = 4;
-	// Obliczenie liczby bloków koniczecznych do przetworzenia ca³ej tablicy
+	// Obliczenie liczby bloków koniczecznych do przetworzenia ca³ej tablicy //~emil poprawilem obliczanie liczby bloków
 	int n_blocks = N / block_size + (N%block_size == 0 ? 0 : 1);
 
 	// Specjalna sk³adnia wywo³ania podprogramu dla GPU z podaniem
