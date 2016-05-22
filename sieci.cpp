@@ -19,7 +19,7 @@ class neuron{
 		int stan; //aktywny 1 nieaktywny -1
 		int sygnal;
 		double x,y;
-		double progSygnalu;
+		double progSygnalu; // okresla minimlne wiazanie dla ktorego sie neuron pali
 	public:
 		void WypiszStan(int s){stan=s;}
 		void WypiszPolozenie(double xx,double yy){x=xx; y=yy;}
@@ -42,14 +42,14 @@ class synapsa{
 
 typedef
 std::vector<neuron*> Komorki;
-Komorki Neur;
+Komorki Neur; // Neur to zmienna typu Komorki(czyli tak jakby tablica neuronow)
 typedef std::vector<synapsa*> Polaczenia;
 Polaczenia Synap;
 
 void AlokujNeurony(Komorki &Neur, int LLx, int LLy){
 		int L=LLx*LLy;
 
-		for(int k=0;k<L;k++) Neur.push_back(new neuron);
+		for(int k=0;k<L;k++) Neur.push_back(new neuron); // tworzy nowy neuron w tablicy neuronow
 }
 
 void AlokujSynapsy (Polaczenia &Synap, int LLx, int LLy){
@@ -58,23 +58,23 @@ void AlokujSynapsy (Polaczenia &Synap, int LLx, int LLy){
 		for(int k=0;k<LL;k++) Synap.push_back(new synapsa);
 }
 
-void ResetujNeurony(Komorki &Neur){
+void ResetujNeurony(Komorki &Neur){ // zmienia stan polaczenia na -1
 cout<<"Reset neuronow ... "<<endl;
 int L=Neur.size();
 	for(int k=0;k<L;k++) Neur[k]->WpiszStan(-1);
 }
 
-void ResetujSynapsy(Polaczenia &synap){
+void ResetujSynapsy(Polaczenia &synap){ // resetuje elemenaty tablicy synap
 	cout<<"Reset synaps ... "<<endl;
 
 	int L=Synap.size();
 		for(int k=k;k<L;k++) Synap[k]->ResetSynapsy();
 }
+//
+void WczytajWspolrzedne(char *nazwapliku, int &Lx, int &Ly){
+		fstream Wejsciowe;
 
-void WczytajParametryObrazka(char *nazwapliku, int &Lx, int &Ly){
-		fstream WE;
-
-		WE.open(nazwapliku,ios::In);
+		Wejsciowe.open(nazwapliku,ios::Init); // to z netu bo nie wiem
 		if(WE.good()==false){
 			cout<<"nie moge otworzyc pliku"<<nazwapliku<<endl;
 			cout<<"wychodze do systemu"<<endl;
@@ -218,12 +218,12 @@ int sila ; // potencjal aktywacyjny neuron
 
 for ( int i=0 ; i<LL ; i++){
 sila =0; // zerujemy dla kazdego neuronu i
-i_rand =(int ) (LL*( rand ( ) / ( 1. 0+RANDMAX) ) ) ;
+i_rand =(int ) (LL*( rand () / ( 1. 0+RANDMAX) ) ) ;
 
-for ( int j =0; j<LL ; j ++){ //wyliczamy sile pozostalych neuronow
+for ( int j =0; j<LL ; j++){ //wyliczamy sile pozostalych neuronow
 if ( i_rand==j ) continue ;
 ij=i_rand *LL+j ;
-sila+=Neur [ j ]->Poda jStan ( ) * Synap [ i j ]->PodajWartoscSynapsy ( ) ;
+sila+=Neur [ j ]->Poda jStan ( ) * Synap [ij]->PodajWartoscSynapsy ( ) ;
 }
 if ( sila <0) {
 if ( Neur [i_rand]->Poda jStan ()==1) iteruj =1;
