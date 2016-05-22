@@ -75,7 +75,7 @@ void WczytajWspolrzedne(char *nazwapliku, int &Lx, int &Ly){
 		fstream Wejsciowe;
 
 		Wejsciowe.open(nazwapliku,ios::Init); // to z netu bo nie wiem
-		if(WE.good()==false){
+		if(Wejsciowe.good()==false){
 			cout<<"nie moge otworzyc pliku"<<nazwapliku<<endl;
 			cout<<"wychodze do systemu"<<endl;
 			exit(1);
@@ -87,8 +87,8 @@ void WczytajWspolrzedne(char *nazwapliku, int &Lx, int &Ly){
 			//ktore zostana wyliczone z pliku z obrazkiem
 
 	while(1){
-		getline(WE, linia);
-		if(WE.eof()) break;
+		getline(Wejsciowe, linia);
+		if(Wejsciowe.eof()) break;
 
 		dlug=linia.size();
 		if(Lx<dlug)Lx=dlug; //lx przyjmuje wartosc maksymalna
@@ -96,43 +96,10 @@ void WczytajWspolrzedne(char *nazwapliku, int &Lx, int &Ly){
 		Ly++; //numeruje kolejne linie az do wartosci maksymalnej
 	}
 
-	WE.close();
+	Wejsciowe.close();
 }
 
-void WczytajObrazek (Komorki &Neur, char *nazwapliku ){
-	fstream WE;
 
-	WE.open (nazwapliku, ios::in);
-	if(WE.good()==false){
-		cout<<"Nie moge otworzyc pliku "<<nazwapliku<<endl;
-		cout<<"Wychodze do systemu :("<<endl;
-		exit (1);
-	}
-
-	string linia;
-	int dlug;
-	int LICZNIK=0;
-	char znak;
-
-	while(1){
-		getline(WE, linia);
-		if(WE.eof()) break;
-
-		dlug=linia.size();
-		for(int k=0;k<dlug; k++){
-			znak=linia[k];
-			if (znak==’*’){
-				Neur[LICZNIK]->WpiszStan(1);
-			}
-
-		LICZNIK++;
-
-		}
-	}
-
-WE.close();
-
-}
 
 void PokazStanyNeuronow(Komorki &Neur, int Lx, int Ly){
 	int j ;
@@ -161,82 +128,6 @@ int ij;
 					else Synap[ij]->WprowadzWartoscSynapsy(-1);
 				}
 			}
-}
-
-void WczytajDowolnyObrazek ( Komorki &Neur , char * nazwapliku , int Lx , int Ly ){
-fstream WE;
-
-WE.open ( nazwapliku , ios :: in ) ;
-if (WE.good()==false ){
-cout<<"Nie moge otworzyc pliku "<<nazwapliku<<endl ;
-cout<<"Wychodze do systemu :("<<endl ;
-exit(1) ;
-}
-
-stringlinia ;
-int dlug ;
-int LICZNIK=0;
-char znak ;
-int numerlinii =0;
-
-while (1) {
-getline (WE, linia );
-if (WE.eof ( ) ) break ;
-
-dlug=linia.size ( );
-
-if ( dlug>Lx ){
-cout<<"Wczytany obrazek jest obciety w linii "<<Lx * Ly / LICZNIK<<endl ;
-}
-
-for ( int k=0;k<dlug ; k++){
-if ( k>=Lx ) continue ; // obciecie horyzontalne
-znak=linia [ k ] ;
-if ( znak==’*’){
-Neur [ LICZNIK]->WpiszStan (1) ;
-}
-
-LICZNIK++;
-
-}
-numerlinii++;
-if ( numerlinii>=Ly ) break ; // obciecie w pionie
-}
-
-WE.close ( ) ;
-
-}
-
-
-int Rozpoznaj ( Komorki &Neur , Polaczenia &Synap , int Lx , int Ly ){
-
-int LL=Lx*Ly ;
-int ij ;
-int i_rand ;
-int iteruj =0;
-int sila ; // potencjal aktywacyjny neuron
-
-for ( int i=0 ; i<LL ; i++){
-sila =0; // zerujemy dla kazdego neuronu i
-i_rand =(int ) (LL*( rand () / ( 1. 0+RANDMAX) ) ) ;
-
-for ( int j =0; j<LL ; j++){ //wyliczamy sile pozostalych neuronow
-if ( i_rand==j ) continue ;
-ij=i_rand *LL+j ;
-sila+=Neur [ j ]->Poda jStan ( ) * Synap [ij]->PodajWartoscSynapsy ( ) ;
-}
-if ( sila <0) {
-if ( Neur [i_rand]->Poda jStan ()==1) iteruj =1;
-Neur [ i_rand ]->WpiszStan ( -1);
-}
-else {
-if ( Neur [ i_rand]->PodajStan ()==-1) iteruj =1;
-Neur [ i_rand]->WpiszStan ( 1 ) ;
-}
-}
-
-
-
- return iteruj ;
+		}
 }
 
