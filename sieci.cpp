@@ -163,3 +163,80 @@ int ij;
 			}
 }
 
+void WczytajDowolnyObrazek ( Komorki &Neur , char * nazwapliku , int Lx , int Ly ){
+fstream WE;
+
+WE.open ( nazwapliku , i o s : : i n ) ;
+if (WE.good()==false ){
+cout<<"Nie moge otworzyc pliku "<<nazwapliku<<endl ;
+cout<<"Wychodze do systemu :("<<endl ;
+exit(1) ;
+}
+
+stringlinia ;
+int dlug ;
+int LICZNIK=0;
+char znak ;
+int numerlinii =0;
+
+while (1) {
+getline (WE, l i n i a ) ;
+if (WE.eof ( ) ) break ;
+
+dlug=linia.size ( );
+
+if ( dlug>Lx ){
+cout<<"Wczytany obrazek jest obciety w linii "<<Lx * Ly / LICZNIK<<endl ;
+}
+
+for ( int k=0;k<dlug ; k++){
+if ( k>=Lx ) continue ; // obciecie horyzontalne
+znak=linia [ k ] ;
+if ( znak==’*’){
+Neur [ LICZNIK]->WpiszStan (1) ;
+}
+
+LICZNIK++;
+
+}
+numerlinii++;
+if ( numerlinii>=Ly ) break ; // obciecie w pionie
+}
+
+WE.close ( ) ;
+
+}
+
+
+int Rozpoznaj ( Komorki &Neur , P ol a c z e ni a &Synap , int Lx , int Ly ){
+
+int LL=Lx*Ly ;
+int ij ;
+int i_rand ;
+int iteruj =0;
+int sila ; // potencjal aktywacyjny neuron
+
+for ( int i=0 ; i<LL ; i++){
+sila =0; // zerujemy dla kazdego neuronu i
+i_rand =(int ) (LL*( rand ( ) / ( 1. 0+RANDMAX) ) ) ;
+
+for ( int j =0; j<LL ; j ++){ //wyliczamy sile pozostalych neuronow
+if ( i_rand==j ) continue ;
+ij=i_rand *LL+j ;
+sila+=Neur [ j ]->Poda jStan ( ) * Synap [ i j ]->PodajWartoscSynapsy ( ) ;
+}
+if ( sila <0) {
+if ( Neur [i_rand]->Poda jStan ()==1) iteruj =1;
+Neur [ i_rand ]->WpiszStan ( -1);
+}
+else {
+if ( Neur [ i_rand]->PodajStan ()==-1) iteruj =1;
+Neur [ i_rand]->WpiszStan ( 1 ) ;
+}
+}
+
+
+
+ return iteruj ;
+}
+
