@@ -166,7 +166,7 @@ int ij;
 void WczytajDowolnyObrazek ( Komorki &Neur , char * nazwapliku , int Lx , int Ly ){
 fstream WE;
 
-WE.open ( nazwapliku , i o s : : i n ) ;
+WE.open ( nazwapliku , ios :: in ) ;
 if (WE.good()==false ){
 cout<<"Nie moge otworzyc pliku "<<nazwapliku<<endl ;
 cout<<"Wychodze do systemu :("<<endl ;
@@ -180,7 +180,7 @@ char znak ;
 int numerlinii =0;
 
 while (1) {
-getline (WE, l i n i a ) ;
+getline (WE, linia );
 if (WE.eof ( ) ) break ;
 
 dlug=linia.size ( );
@@ -208,7 +208,7 @@ WE.close ( ) ;
 }
 
 
-int Rozpoznaj ( Komorki &Neur , P ol a c z e ni a &Synap , int Lx , int Ly ){
+int Rozpoznaj ( Komorki &Neur , Polaczenia &Synap , int Lx , int Ly ){
 
 int LL=Lx*Ly ;
 int ij ;
